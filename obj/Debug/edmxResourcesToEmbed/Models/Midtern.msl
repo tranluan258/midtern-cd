@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MidternModelStoreContainer" CdmEntityContainer="MidternEntities">
+    <EntitySetMapping Name="Accounts">
+      <EntityTypeMapping TypeName="MidternModel.Account">
+        <MappingFragment StoreEntitySet="Account">
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="role" ColumnName="role" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Comments">
+      <EntityTypeMapping TypeName="MidternModel.Comment">
+        <MappingFragment StoreEntitySet="Comment">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="idPost" ColumnName="idPost" />
+          <ScalarProperty Name="data" ColumnName="data" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Posts">
+      <EntityTypeMapping TypeName="MidternModel.Post">
+        <MappingFragment StoreEntitySet="Post">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="namePost" ColumnName="namePost" />
+          <ScalarProperty Name="topicKey" ColumnName="topicKey" />
+          <ScalarProperty Name="data" ColumnName="data" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Topics">
+      <EntityTypeMapping TypeName="MidternModel.Topic">
+        <MappingFragment StoreEntitySet="Topic">
+          <ScalarProperty Name="topicKey" ColumnName="topicKey" />
+          <ScalarProperty Name="topicName" ColumnName="topicName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

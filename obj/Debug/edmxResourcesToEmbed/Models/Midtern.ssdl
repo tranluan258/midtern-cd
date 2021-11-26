@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MidternModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Account">
+    <Key>
+      <PropertyRef Name="username" />
+    </Key>
+    <Property Name="username" Type="char" MaxLength="20" Nullable="false" />
+    <Property Name="password" Type="char" MaxLength="20" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="role" Type="int" />
+  </EntityType>
+  <EntityType Name="Comment">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="username" Type="char" MaxLength="20" />
+    <Property Name="idPost" Type="int" Nullable="false" />
+    <Property Name="data" Type="nvarchar" MaxLength="1000" />
+  </EntityType>
+  <EntityType Name="Post">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="namePost" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="topicKey" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="data" Type="nvarchar" MaxLength="1000" />
+  </EntityType>
+  <EntityType Name="Topic">
+    <Key>
+      <PropertyRef Name="topicKey" />
+    </Key>
+    <Property Name="topicKey" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="topicName" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Comment__idPost__2A4B4B5E">
+    <End Role="Post" Type="Self.Post" Multiplicity="1" />
+    <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Post">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Comment">
+        <PropertyRef Name="idPost" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Comment__usernam__2B3F6F97">
+    <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+    <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="username" />
+      </Principal>
+      <Dependent Role="Comment">
+        <PropertyRef Name="username" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Post__topicKey__2C3393D0">
+    <End Role="Topic" Type="Self.Topic" Multiplicity="1" />
+    <End Role="Post" Type="Self.Post" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Topic">
+        <PropertyRef Name="topicKey" />
+      </Principal>
+      <Dependent Role="Post">
+        <PropertyRef Name="topicKey" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MidternModelStoreContainer">
+    <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Post" EntityType="Self.Post" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Topic" EntityType="Self.Topic" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Comment__idPost__2A4B4B5E" Association="Self.FK__Comment__idPost__2A4B4B5E">
+      <End Role="Post" EntitySet="Post" />
+      <End Role="Comment" EntitySet="Comment" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Comment__usernam__2B3F6F97" Association="Self.FK__Comment__usernam__2B3F6F97">
+      <End Role="Account" EntitySet="Account" />
+      <End Role="Comment" EntitySet="Comment" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Post__topicKey__2C3393D0" Association="Self.FK__Post__topicKey__2C3393D0">
+      <End Role="Topic" EntitySet="Topic" />
+      <End Role="Post" EntitySet="Post" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
