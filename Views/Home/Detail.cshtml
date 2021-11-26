@@ -57,10 +57,25 @@
                                 <p class="nd">
                                     @Model.post.data
                                 </p>
-                            </div>
-                           
+                            </div>                           
                         </div>
                         <div class="card-footer">
+                            <div class="form-text-comment">
+                                <div>
+                                    <textarea id="input-text-add-comment-"
+                                              type="text"
+                                              placeholder="Nhập bình luận của bạn"
+                                              class="input-text-add-comment"
+                                              name="post-form-info"
+                                              data-content="Vui lòng nhập bình luận của bạn trước khi gửi"
+                                              data-placement="top"></textarea>
+                                </div>
+                                <a class="btn-comment-post">
+                                    <i data-id="<%=item._id%>"
+                                       class="fa fa-paper-plane"
+                                       aria-hidden="true"></i>
+                                </a>
+                            </div>
                             @foreach (var cmt in Model.comments)
                             {
                                 <div class="comment">
@@ -71,7 +86,7 @@
                                     </div>
                                 </div>
                             }
- 
+
                         </div>
                     </div>
                 </form>

@@ -124,3 +124,35 @@
     justify-content: center;
     padding-bottom: 30px;
 }
+
+.form-text-comment {
+    background-color: #f2f2f3;
+    width: 100%;
+    padding: 10px;
+    padding-bottom: 20px;
+    padding-top: 25px;
+}
+.input-text-add-comment {
+    width: 90%;
+    padding: 2px;
+    border: 1px solid rgb(155, 77, 144);
+    border-radius: 15px;
+    outline: none;
+    box-sizing: border-box;
+    font-size: 15px;
+    float: left;
+}
+
+.btn-comment-post {
+    font-size: 27px;
+    color: #000000;
+    background-color: #f2f2f3;
+    border-radius: 10px;
+    margin-left: 1%;
+    cursor: pointer;
+}
+
+    .btn-comment-post:hover {
+        background-color: #bbb8b8;
+        color: #1f1e1e;
+    }
