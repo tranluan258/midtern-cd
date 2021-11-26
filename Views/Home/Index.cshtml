@@ -45,17 +45,61 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#"><i class="fa fa-user-o" aria-hidden="true"></i> Sign out</a>
                 </li>
-            </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-            </form>
-
-
+            </ul>            
 
         </div>
     </nav>
-    
+
+    <div class="bar">
+        <div class="inner">
+            <input id="search" type="search" class="search-input" Placeholder="Search for people, places and things" />
+            <span aria-hidden="true" class="search-btn">
+                <i class="fa fa-search" aria-hidden="true"></i>
+                <input type="submit" class="searchsubmit" value="">
+            </span>
+        </div>
+    </div>
+
+    <div class="content-list" id="list">
+        <ul class="drop-list">
+            <li>
+                <a href="">
+                    <span class="item">
+                        <span class="text">People I may know</span>
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <span class="item">
+                        <span class="text">Photos of my friends</span>
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <span class="item">
+                        <span class="text">Movies my friends like</span>
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <span class="item">
+                        <span class="text">Places nearby</span>
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <span class="item">
+                        <span class="text">Music my friends like</span>
+                    </span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
     <div class="container">
         <div class=row justify-content-center">
 
@@ -89,10 +133,10 @@
                                 <div class="chitietbaiviet">
                                     <a href="\Home\Detail\@post.id">Xem thêm</a>
                                 </div>
-                               @* <div>
-                                    <a class="tagchude" href="">JS</a>
-                                    <a class="tagchude" href="">Blockchain</a>
-                                </div>*@
+                                @* <div>
+                                        <a class="tagchude" href="">JS</a>
+                                        <a class="tagchude" href="">Blockchain</a>
+                                    </div>*@
                             </div>
                         </div>
                     </form>
@@ -114,3 +158,21 @@
 </body>
 </html>
 
+
+<script>    
+
+    $('#search').click(function (event) {
+
+        event.stopPropagation();
+
+
+        $("#list").show();
+
+    });
+
+    $(document).click(function () {
+
+        $('#list').hide();
+
+    });
+</script>

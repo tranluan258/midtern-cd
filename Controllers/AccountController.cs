@@ -50,5 +50,27 @@ namespace Midterm_Chuyende.Controllers
             ViewBag.Error = "Sai tên tai khoản hoặc mật khẩu";
             return View();
         }
+        [HttpPost]
+        public JsonResult AddComment(String data, int idPost)
+        {
+            String username = Session["Account"].ToString();
+            Comment cmt = new Comment();
+            cmt.data = data;
+            cmt.idPost = idPost;
+            cmt.username = username;
+            db.Comments.Add(cmt);
+            db.SaveChanges();
+
+            return Json(new { code = true, msg = cmt });
+        }
+        [HttpPost]
+        public JsonResult DeleteComment(int id)
+        {
+            Comment cmt = db.Comments.FirstOrDefault(c => c.id == id);
+            db.Comments.Remove(cmt);
+            db.SaveChanges();
+
+            return Json(new { code = true, msg = id });
+        }
     }
 }

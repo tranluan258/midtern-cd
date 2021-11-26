@@ -53,8 +53,8 @@ namespace Midterm_Chuyende.Controllers
 
         public JsonResult Search(String name)
         {
-
-            return Json(new { code = false, msg = "Đã xóa" });
+            List<Post> posts = db.Posts.Where(p => p.namePost.StartsWith(name)).ToList();
+            return Json(new { code = false, msg = posts });
         }
 
         public ActionResult Detail(int id)
@@ -63,7 +63,6 @@ namespace Midterm_Chuyende.Controllers
             data.post = db.Posts.FirstOrDefault(p => p.id == id);
             data.comments = db.Comments.Where(c => c.idPost == id).ToList();
             return View(data);
-        }
-
+        }        
     }
 }

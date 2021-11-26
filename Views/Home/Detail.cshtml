@@ -62,39 +62,35 @@
                         <div class="card-footer">
                             <div class="form-text-comment">
                                 <div>
-                                    <textarea id="input-text-add-comment-"
+                                    <textarea id="input-text-add-comment"
                                               type="text"
                                               placeholder="Nhập bình luận của bạn"
-                                              class="input-text-add-comment"
-                                              name="post-form-info"
+                                              class="input-text-add-comment"                                              
                                               data-content="Vui lòng nhập bình luận của bạn trước khi gửi"
                                               data-placement="top"></textarea>
                                 </div>
                                 <a class="btn-comment-post">
-                                    <i data-id="<%=item._id%>"
+                                    <i 
                                        class="fa fa-paper-plane"
                                        aria-hidden="true"></i>
                                 </a>
                             </div>
-                            @foreach (var cmt in Model.comments)
-                            {
-                                <div class="comment">
-                                    <div class="tacgia">@cmt.Account.name</div>
-                                    <div class="noidungcmt">
-                                        <div class="form-control">@cmt.data</div>
-                                        <button class="btnthungrac"><i class="thungrac fa fa-trash" aria-hidden="true"></i></button>
+                            <div id="list-comment-post">
+                                @foreach (var cmt in Model.comments)
+                                {
+                                    <div class="comment" id="one-comment-@cmt.id">
+                                        <div class="tacgia">@cmt.Account.name</div>
+                                        <div class="noidungcmt">
+                                            <div class="form-control">@cmt.data</div>
+                                            <button class="btnthungrac"><i data-id="@cmt.id" class="thungrac fa fa-trash" aria-hidden="true"></i></button>
+                                        </div>
                                     </div>
-                                </div>
-                            }
-
+                                }
+                            </div> 
                         </div>
                     </div>
                 </form>
             </div>
-
-
-
-
 
 
         </div>
@@ -102,5 +98,78 @@
 
 </body>
 </html>
+
+<script>
+    $(document).ready(function () {
+        $(".btn-comment-post").click(function (event) {
+            event.preventDefault()
+            var comment = $("#input-text-add-comment").val();
+            if (!comment) {
+                $("#input-text-add-comment").popover("show").on('shown.bs.popover', function () {
+                    $("#input-text-add-comment").focus();
+                    setTimeout(function () {
+                        $("#input-text-add-comment").popover('hide');
+                    }, 2000);
+                });
+            }
+            else {
+                $(".btn-comment-post").css("display", "none");
+                fetch("/Account/AddComment", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        data: comment,
+                        idPost: @Model.post.id
+                    }),
+                })
+                    .then((response) => response.json())
+                    .then((result) => {
+                        console.log("Success:", result);
+                        $("#input-text-add-comment").val("");
+                        $("#list-comment-post").append(`<div class="comment" id="one-comment-${result.msg.id}">
+                                        <div class="tacgia">${result.msg.username}</div>
+                                        <div class="noidungcmt">
+                                            <div class="form-control">${result.msg.data}</div>
+                                            <button class="btnthungrac"><i data-id="${result.msg.id}" class="thungrac fa fa-trash" aria-hidden="true"></i></button>
+                                        </div>
+                                    </div>`);
+                        $(".btn-comment-post").css("display", "block");
+                    })
+                    .catch((error) => {
+                        console.error("Error:", error);
+                    });
+            }
+
+        })
+    })
+
+    $(function () {
+        $(document).on("click", ".btnthungrac", function (event) {
+            event.preventDefault()
+            var currentCommentId = $(this).attr("data-id");
+            if (confirm("Bạn có chắc muốn xóa bình luận này?")) {
+                fetch("/Account/DeleteComment", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        id: parseInt(currentCommentId)
+                    }),
+                })
+                    .then((response) => response.json())
+                    .then((result) => {
+                        console.log("Success:", result);
+                        $("#one-comment-" + currentCommentId).remove();
+                    })
+                    .catch((error) => {
+                        console.error("Error:", error);
+                    });
+            }
+        })
+    })
+</script>
 
 
