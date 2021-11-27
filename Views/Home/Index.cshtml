@@ -52,7 +52,7 @@
 
     <div class="bar">
         <div class="inner">
-            <input id="searchInput" type="search" class="search-input" Placeholder="Search for post title" />
+            <input id="searchInput" oninput="Search(this.value)" type="search" class="search-input" Placeholder="Search for post title" />
             <span aria-hidden="true" class="search-btn">
                 <i class="fa fa-search" aria-hidden="true"></i>
                 <input type="submit" class="searchsubmit" value="">
@@ -62,42 +62,7 @@
 
     <div class="content-list" id="list">
         <ul id="list-search-post" class="drop-list">
-            <li>
-                <a href="">
-                    <span class="item">
-                        <span class="text">People I may know</span>
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a href="">
-                    <span class="item">
-                        <span class="text">Photos of my friends</span>
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a href="">
-                    <span class="item">
-                        <span class="text">Movies my friends like</span>
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a href="">
-                    <span class="item">
-                        <span class="text">Places nearby</span>
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a href="">
-                    <span class="item">
-                        <span class="text">Music my friends like</span>
-                    </span>
-                </a>
-            </li>
-        </ul>
+            
     </div>
 
     <div class="container">
@@ -161,15 +126,6 @@
 
 <script>    
 
-    $('#searchInput').click(function (event) {
-
-        event.stopPropagation();
-
-
-        $("#list").show();
-
-    });
-
     $(document).click(function () {
 
         $('#list').hide();
@@ -177,25 +133,26 @@
     });
 
     $(document).ready(function () {
-        $("#searchInput").on("keyup", function () {
-            var value = $(this).val();            
-            console.log(value);
-            fetch("/Home/SearchPost", { 
+      
+    });
+
+    function Search(value) {
+        $("#list-search-post").show();
+        if (value.length > 0) {
+            fetch("/Home/SearchPost/" + value, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({
-                    nameSearch: value
-                }),
             })
                 .then((response) => response.json())
                 .then((result) => {
                     console.log("Success:", result);
                     $("#list-search-post").empty();
-                    jQuery.each(result.msg.posts, function (index, item) {
+                    $("#list").show();
+                    jQuery.each(result.msg, function (index, item) {
                         $("#list-search-post").append(`<li>
-                    <a href="">
+                    <a href="/Home/Detail/${item.id}">
                     <span class="item">
                         <span class="text">${item.namePost}</span>
                     </span>
@@ -206,6 +163,6 @@
                 .catch((error) => {
                     console.error("Error:", error);
                 });
-        });
-    });
+        }
+    }
 </script>
