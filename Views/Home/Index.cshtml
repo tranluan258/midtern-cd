@@ -52,7 +52,7 @@
 
     <div class="bar">
         <div class="inner">
-            <input id="search" type="search" class="search-input" Placeholder="Search for people, places and things" />
+            <input id="searchInput" type="search" class="search-input" Placeholder="Search for post title" />
             <span aria-hidden="true" class="search-btn">
                 <i class="fa fa-search" aria-hidden="true"></i>
                 <input type="submit" class="searchsubmit" value="">
@@ -61,7 +61,7 @@
     </div>
 
     <div class="content-list" id="list">
-        <ul class="drop-list">
+        <ul id="list-search-post" class="drop-list">
             <li>
                 <a href="">
                     <span class="item">
@@ -161,7 +161,7 @@
 
 <script>    
 
-    $('#search').click(function (event) {
+    $('#searchInput').click(function (event) {
 
         event.stopPropagation();
 
@@ -174,5 +174,38 @@
 
         $('#list').hide();
 
+    });
+
+    $(document).ready(function () {
+        $("#searchInput").on("keyup", function () {
+            var value = $(this).val();            
+            console.log(value);
+            fetch("/Home/SearchPost", { 
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    nameSearch: value
+                }),
+            })
+                .then((response) => response.json())
+                .then((result) => {
+                    console.log("Success:", result);
+                    $("#list-search-post").empty();
+                    jQuery.each(result.msg.posts, function (index, item) {
+                        $("#list-search-post").append(`<li>
+                    <a href="">
+                    <span class="item">
+                        <span class="text">${item.namePost}</span>
+                    </span>
+                    </a>
+                    </li>`)
+                    });
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                });
+        });
     });
 </script>

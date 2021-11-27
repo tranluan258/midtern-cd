@@ -51,9 +51,10 @@ namespace Midterm_Chuyende.Controllers
             return View(data);
         }
 
-        public JsonResult Search(String name)
+        [HttpPost]
+        public JsonResult SearchPost(String nameSearch)
         {
-            List<Post> posts = db.Posts.Where(p => p.namePost.StartsWith(name)).ToList();
+            List<Post> posts = db.Posts.Where(p => p.namePost.StartsWith(nameSearch)).ToList();
             return Json(new { code = false, msg = posts });
         }
 

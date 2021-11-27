@@ -82,7 +82,7 @@
                                         <div class="tacgia">@cmt.Account.name</div>
                                         <div class="noidungcmt">
                                             <div class="form-control">@cmt.data</div>
-                                            <button class="btnthungrac"><i data-id="@cmt.id" class="thungrac fa fa-trash" aria-hidden="true"></i></button>
+                                            <button data-id="@cmt.id" class="btnthungrac"><i class="thungrac fa fa-trash" aria-hidden="true"></i></button>
                                         </div>
                                     </div>
                                 }
@@ -145,11 +145,12 @@
         })
     })
 
-    $(function () {
-        $(document).on("click", ".btnthungrac", function (event) {
+    $(document).ready(function () {
+        $(".btnthungrac").click(function (event) {
             event.preventDefault()
             var currentCommentId = $(this).attr("data-id");
             if (confirm("Bạn có chắc muốn xóa bình luận này?")) {
+                console.log(currentCommentId);
                 fetch("/Account/DeleteComment", {
                     method: "POST",
                     headers: {
