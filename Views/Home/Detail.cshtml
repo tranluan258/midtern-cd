@@ -132,7 +132,7 @@
                                         <div class="tacgia">${result.msg.username}</div>
                                         <div class="noidungcmt">
                                             <div class="form-control">${result.msg.data}</div>
-                                            <button class="btnthungrac"><i data-id="${result.msg.id}" class="thungrac fa fa-trash" aria-hidden="true"></i></button>
+                                            <button data-id="${result.msg.id}" class="btnthungrac"><i class="thungrac fa fa-trash" aria-hidden="true"></i></button>
                                         </div>
                                     </div>`);
                         $(".btn-comment-post").css("display", "block");
@@ -145,8 +145,8 @@
         })
     })
 
-    $(document).ready(function () {
-        $(".btnthungrac").click(function (event) {
+    $(function () {
+        $(document).on("click", ".btnthungrac", function (event) {
             event.preventDefault()
             var currentCommentId = $(this).attr("data-id");
             if (confirm("Bạn có chắc muốn xóa bình luận này?")) {
