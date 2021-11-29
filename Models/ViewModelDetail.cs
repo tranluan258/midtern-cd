@@ -9,5 +9,6 @@ namespace Midterm_Chuyende.Models
     {
         public Post post { get; set; }
         public List<Comment> comments { get; set; }
+        public Account account { get; set; }
     }
 }

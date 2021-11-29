@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace Midterm_Chuyende.Controllers
 {
@@ -13,6 +14,11 @@ namespace Midterm_Chuyende.Controllers
         MidternEntities db = new MidternEntities();
         public ActionResult Index(String id)
         {
+            if(Session["Account"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
             ViewModelIndex data = new ViewModelIndex();
             int page = 1;
             int pageSize = 3;
@@ -60,10 +66,23 @@ namespace Midterm_Chuyende.Controllers
 
         public ActionResult Detail(int id)
         {
+            if (Session["Account"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
             ViewModelDetail data = new ViewModelDetail();
+            String username = Session["Account"].ToString();
+            data.account = db.Accounts.FirstOrDefault(a => a.username == username);
             data.post = db.Posts.FirstOrDefault(p => p.id == id);
             data.comments = db.Comments.Where(c => c.idPost == id).ToList();
             return View(data);
-        }        
+        }
+        
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            Session.Abandon();
+            return RedirectToAction("Login", "Account");
+        }
     }
 }

@@ -28,11 +28,10 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Home/Logout"><i class="fa fa-user-o" aria-hidden="true"></i> Sign out</a>
+                </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-            </form>
         </div>
     </nav>
     <div class="container">
@@ -82,7 +81,17 @@
                                         <div class="tacgia">@cmt.Account.name</div>
                                         <div class="noidungcmt">
                                             <div class="form-control">@cmt.data</div>
-                                            <button data-id="@cmt.id" class="btnthungrac"><i class="thungrac fa fa-trash" aria-hidden="true"></i></button>
+                                            @if (Model.account.role == 0)
+                                            {
+                                                <button data-id="@cmt.id" class="btnthungrac"><i class="thungrac fa fa-trash" aria-hidden="true"></i></button>
+                                            }
+                                            @if(Model.account.role != 0){
+                                                if (Model.account.username == cmt.Account.username)
+                                                {
+                                                    <button data-id="@cmt.id" class="btnthungrac"><i class="thungrac fa fa-trash" aria-hidden="true"></i></button>
+                                                }
+                                            }
+
                                         </div>
                                     </div>
                                 }
@@ -129,7 +138,7 @@
                         console.log("Success:", result);
                         $("#input-text-add-comment").val("");
                         $("#list-comment-post").append(`<div class="comment" id="one-comment-${result.msg.id}">
-                                        <div class="tacgia">${result.msg.username}</div>
+                                        <div class="tacgia">${result.msg.name}</div>
                                         <div class="noidungcmt">
                                             <div class="form-control">${result.msg.data}</div>
                                             <button data-id="${result.msg.id}" class="btnthungrac"><i class="thungrac fa fa-trash" aria-hidden="true"></i></button>

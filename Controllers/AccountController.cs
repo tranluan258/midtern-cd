@@ -54,14 +54,15 @@ namespace Midterm_Chuyende.Controllers
         public JsonResult AddComment(String data, int idPost)
         {
             String username = Session["Account"].ToString();
+            Account user = db.Accounts.FirstOrDefault(a => a.username == username);
             Comment cmt = new Comment();
             cmt.data = data;
             cmt.idPost = idPost;
-            cmt.username = username;
+            cmt.Account = user;
             db.Comments.Add(cmt);
             db.SaveChanges();
 
-            return Json(new { code = true, msg = cmt });
+            return Json(new { code = true, msg = new { id = cmt.id, data = cmt.data, username = cmt.Account.username, name = cmt.Account.name} });
         }
         [HttpPost]
         public JsonResult DeleteComment(int id)
